@@ -2,6 +2,7 @@ let audioContext;
 let mediaRecorder;
 let audioChunks = [];
 let audioBuffer;
+let effectType = 'demon';
 
 document.getElementById('recordButton').addEventListener('click', async () => {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -34,6 +35,14 @@ document.getElementById('playButton').addEventListener('click', async () => {
     playAudio(modifiedBuffer);
 });
 
+document.getElementById('demon').addEventListener('click', () => {
+    effectType = 'demon';
+});
+
+document.getElementById('low').addEventListener('click', () => {
+    effectType = 'high';
+});
+
 async function modifyVoice(buffer) {
     const offlineContext = new OfflineAudioContext(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
     const source = offlineContext.createBufferSource();
@@ -43,9 +52,15 @@ async function modifyVoice(buffer) {
     gainNode.gain.value = 2;
 
     const biquadFilter = offlineContext.createBiquadFilter();
-    biquadFilter.type = 'lowshelf';
-    biquadFilter.frequency.setValueAtTime(1000, offlineContext.currentTime);
-    biquadFilter.gain.setValueAtTime(30, offlineContext.currentTime);
+    if (effectType === 'demon') {
+        biquadFilter.type = 'lowshelf';
+        biquadFilter.frequency.setValueAtTime(1000, offlineContext.currentTime);
+        biquadFilter.gain.setValueAtTime(30, offlineContext.currentTime);
+    } else if (effectType === 'high') {
+        biquadFilter.type = 'highshelf';
+        biquadFilter.frequency.setValueAtTime(3000, offlineContext.currentTime);
+        biquadFilter.gain.setValueAtTime(30, offlineContext.currentTime);
+    }
 
     source.connect(gainNode);
     gainNode.connect(biquadFilter);
