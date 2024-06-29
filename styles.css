@@ -19,6 +19,10 @@ button {
     font-size: 16px;
 }
 
+button:hover{
+    background-color: rgb(238, 238, 114);
+
+}
 #t1{
     color: white;
     font-size: 50px ;
@@ -45,5 +49,29 @@ button {
     height: 300px;
     width: 230px;
     border-radius: 10px;
+}
+
+#contain2{
+    position: absolute;
+    top: 520px;
+    left: 490px;
+    border: 2px solid grey;
+    height: 100px;
+    width: 400px;
+    border-radius: 10px;
+}
+
+#demon{
+    position: absolute;
+    font-size: 40px;
+    top: 335px;
+    left: 350px;
+}
+
+#low{
+    position: absolute;
+    font-size: 40px;
+    top: 335px;
+    left: 550px;
 }
 
